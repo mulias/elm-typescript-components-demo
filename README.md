@@ -5,8 +5,10 @@ React project that uses typescript.
 
 ### Setup
 
-`yarn`
-`yarn elm make src/elm/*.elm`
+```
+yarn
+yarn elm make src/elm/*.elm --output='src/elm/ElmApp.js'
+```
 
 ### Demo Contents
 
@@ -20,15 +22,24 @@ applications:
 - And finally a `FlagsAndPortsApp` where React both passes an initial flag and
   subscribes to outgoing Elm messages through a port.
 
-The ultimate goal is to improve the tooling around Elm, React, and Typescript so
-that after installing the required libraries using elm components in this way
-just works. We aren't quite at that point yet, since for this example we:
+Running `yarn elm-typescript-interop` generates TypeScript declaration files for
+each Elm module. Unfortunatly the structure of these declarations assumes that
+the elm modules are compiled seperatly, which is not the case here. As a result
+we need to both re-generate the declarations when our Elm code changes, and then
+copy those changes into the main `src/elm/ElmApps/index.d.ts` file.
 
-- Add `rect-elm-components.d.ts` type declarations.
+### Goals
+
+The ultimate goal is to improve the tooling around Elm, React, and Typescript so
+that the three tools interop seamlessly. That means eliminating these tasks,
+which are currently done by hand:
+
+- Write the `rect-elm-components.d.ts` type declarations.
 - Create a `usePorts` hook for easy port setup.
-- Manually compile the elm code before the typescript code.
+- Compile the elm code before the typescript code.
 - Collect the output of `elm-typescript-interop` and create a declaration file
-  for the compiled elm code with multiple entry points.
+  for the compiled multi-module elm code.
+- Fix inconsistencies in how `elm-typescript-interop` generates types for ports.
 
 ### Todo
 
