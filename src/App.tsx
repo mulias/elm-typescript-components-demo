@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from "react";
-import "./App.css";
 import ElmComponent from "react-elm-components";
 import usePorts from "./usePorts";
 import { Elm } from "./elm/ElmApps";
