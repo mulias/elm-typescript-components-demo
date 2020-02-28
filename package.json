@@ -58,6 +58,11 @@
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "4.3.1"
   },
+  "devDependencies": {
+    "elm": "^0.19.0-no-deps",
+    "elm-typescript-interop": "^0.0.15",
+    "prettier": "^1.18.2"
+  },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js"
@@ -79,11 +84,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "elm": "^0.19.0-no-deps",
-    "elm-typescript-interop": "^0.0.15",
-    "prettier": "^1.18.2"
   },
   "babel": {
     "presets": [
