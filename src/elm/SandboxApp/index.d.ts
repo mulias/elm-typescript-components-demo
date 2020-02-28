@@ -3,15 +3,23 @@
 // Type definitions for Elm ports
 
 export namespace Elm {
-  namespace Main {
+  namespace SandboxApp {
     export interface App {
       ports: {
-        
+        alert: {
+          subscribe(callback: (data: string) => void): void
+        }
+        ping: {
+          subscribe(callback: (data: null) => void): void
+        }
+        pong: {
+          send(data: null): void
+        }
       };
     }
     export function init(options: {
       node?: HTMLElement | null;
       flags: null;
-    }): Elm.Main.App;
+    }): Elm.SandboxApp.App;
   }
 }
