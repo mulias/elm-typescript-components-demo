@@ -1,44 +1,47 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Elm, React, and TypeScript Interop Demo
 
-## Available Scripts
+This repo demonstrates the current state of integrating Elm applications into a
+React project that uses typescript.
 
-In the project directory, you can run:
+### Setup
 
-### `npm start`
+`yarn`
+`yarn elm make src/elm/*.elm`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Demo Contents
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Running `yarn start` launches the react app, which contains four separate Elm
+applications:
 
-### `npm test`
+- A `SandboxApp` where React mounts the Elm code as a component, but does no interop.
+- A `FlagsApp` where React passes a flag to Elm on mount.
+- A `PortsApp` which sets up bi-directional interop and passes messages back and
+  forth between React and Elm.
+- And finally a `FlagsAndPortsApp` where React both passes an initial flag and
+  subscribes to outgoing Elm messages through a port.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The ultimate goal is to improve the tooling around Elm, React, and Typescript so
+that after installing the required libraries using elm components in this way
+just works. We aren't quite at that point yet, since for this example we:
 
-### `npm run build`
+- Add `rect-elm-components.d.ts` type declarations.
+- Create a `usePorts` hook for easy port setup.
+- Manually compile the elm code before the typescript code.
+- Collect the output of `elm-typescript-interop` and create a declaration file
+  for the compiled elm code with multiple entry points.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Todo
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Contact the `react-elm-components` maintainers about adding `rect-elm-components.d.ts`
+  to the repo, or instead adding it to `DefinitelyTyped`.
+- Similarly, get `usePorts` added to `react-elm-components`, or publish as a
+  separate package.
+- Contact the `elm-typescript-interop` maintainers about issues generating types
+  for multiple elm applications.
+- Figure out how to integrate the elm compiler as a webpack loader. I seem to
+  remember trying this with `elm-webpack-loader`, but the way `*.elm` files were
+  imported didn't work with `react-elm-components`, or something. This may be
+  fixed, or may be fixable through configuration. Short of that, determine what
+  needs to change to make these two libraries compatable.
+- After the webpack loader is set up, make `elm-typescript-interop` also run
+  when watched elm files change.
