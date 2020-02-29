@@ -1,9 +1,9 @@
 declare module "react-elm-components" {
   import React from "react";
 
-  export interface ElmApp<Flags, Ports> {
-    init: (options: { flags: Flags }) => { ports: Ports };
-  }
+  export type ElmApp<Flags, Ports> =
+    | { init: (options: { flags: Flags }) => { ports: Ports } }
+    | { embed: (node: any, flags: Flags) => { ports: Ports } };
 
   export type Ports<T extends ElmApp<any, any>> = T extends ElmApp<any, infer P>
     ? P
