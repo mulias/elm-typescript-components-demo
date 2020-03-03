@@ -43,16 +43,17 @@ which are currently done by hand:
 
 ### Todo
 
-- Contact the `react-elm-components` maintainers about adding `rect-elm-components.d.ts`
-  to the repo, or instead adding it to `DefinitelyTyped`.
-- Similarly, get `usePorts` added to `react-elm-components`, or publish as a
-  separate package.
-- Contact the `elm-typescript-interop` maintainers about issues generating types
-  for multiple elm applications.
-- Figure out how to integrate the elm compiler as a webpack loader. I seem to
+- [ ] Contact the `react-elm-components` maintainers about adding `rect-elm-components.d.ts`
+  to the repo, or instead adding it to `DefinitelyTyped`. Status: [PR open](https://github.com/cultureamp/react-elm-components/pull/30),
+  review pending.
+- [ ] Publish `usePorts` as an npm package.
+- [ ] Contact the `elm-typescript-interop` maintainers about issues generating types
+  for multiple elm applications. Status: [Issue open](https://github.com/dillonkearns/elm-typescript-interop/issues/28),
+  response pending. This may be a dead project, so I've [started work on an alternative](https://github.com/mulias/elm-tigershark).
+- [ ] Figure out how to integrate the elm compiler as a webpack loader. I seem to
   remember trying this with `elm-webpack-loader`, but the way `*.elm` files were
   imported didn't work with `react-elm-components`, or something. This may be
   fixed, or may be fixable through configuration. Short of that, determine what
   needs to change to make these two libraries compatable.
-- After the webpack loader is set up, make `elm-typescript-interop` also run
+- [ ] After the webpack loader is set up, make `elm-typescript-interop` also run
   when watched elm files change.
