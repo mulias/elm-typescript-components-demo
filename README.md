@@ -50,10 +50,15 @@ which are currently done by hand:
 - [ ] Contact the `elm-typescript-interop` maintainers about issues generating types
   for multiple elm applications. Status: [Issue open](https://github.com/dillonkearns/elm-typescript-interop/issues/28),
   response pending. This may be a dead project, so I've [started work on an alternative](https://github.com/mulias/elm-tigershark).
-- [ ] Figure out how to integrate the elm compiler as a webpack loader. I seem to
+- [x] Figure out how to integrate the elm compiler as a webpack loader. I seem to
   remember trying this with `elm-webpack-loader`, but the way `*.elm` files were
   imported didn't work with `react-elm-components`, or something. This may be
   fixed, or may be fixable through configuration. Short of that, determine what
-  needs to change to make these two libraries compatable.
+  needs to change to make these two libraries compatable. Update:
+  `elm-webpack-loader` is currently working with the exploratory ts-interop
+  library, so that seems like the path forward.
 - [ ] After the webpack loader is set up, make `elm-typescript-interop` also run
-  when watched elm files change.
+  when watched elm files change. Update: I don't think webpack is the right
+  place for this, since the declaration file is not an emitted asset. It seems
+  more appropriate to have a `--watch` flag on the declaration file generating
+  tool.
