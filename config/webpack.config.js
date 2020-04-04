@@ -26,6 +26,7 @@ const ModuleNotFoundPlugin = require("react-dev-utils/ModuleNotFoundPlugin");
 const ForkTsCheckerWebpackPlugin = require("react-dev-utils/ForkTsCheckerWebpackPlugin");
 const typescriptFormatter = require("react-dev-utils/typescriptFormatter");
 const eslint = require("eslint");
+const { ElmTigersharkPlugin } = require("elm-tigershark");
 
 const postcssNormalize = require("postcss-normalize");
 
@@ -283,9 +284,7 @@ module.exports = function(webpackEnv) {
       // https://github.com/facebook/create-react-app/issues/290
       // `web` extension prefixes have been added for better support
       // for React Native Web.
-      extensions: paths.moduleFileExtensions
-        .map(ext => `.${ext}`)
-        .filter(ext => useTypeScript || !ext.includes("ts")),
+      extensions: [...paths.moduleFileExtensions, "elm"].map(ext => `.${ext}`),
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -401,6 +400,18 @@ module.exports = function(webpackEnv) {
                 // being evaluated would be much more helpful.
                 sourceMaps: false
               }
+            },
+            {
+              test: /\.elm$/,
+              exclude: [/elm-stuff/, /node_modules/],
+              use: [
+                {
+                  loader: "elm-webpack-loader",
+                  options: {
+                    optimize: isEnvProduction
+                  }
+                }
+              ]
             },
             // "postcss" loader applies autoprefixer to our CSS.
             // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -623,7 +634,10 @@ module.exports = function(webpackEnv) {
           silent: true,
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined
-        })
+        }),
+      new ElmTigersharkPlugin(
+        "elm make src/elm/*.elm --output=/dev/null && tigershark src/elm/*.elm --output=src/elm.d.ts --tsModule='*.elm' && prettier src/elm.d.ts --write"
+      )
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.
