@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import ElmComponent from "react-elm-components";
+import ElmComponent, { Flags } from "react-elm-components";
 import usePorts from "./usePorts";
-import { Elm } from "./elm/ElmApps";
+import { Elm } from "./elm/PortsApp.elm";
 
 const Ports: React.FC = () => {
   // Wait for a ping from PortsApp before being allowed to pong back
@@ -21,7 +21,7 @@ const Ports: React.FC = () => {
   return (
     <div>
       <h2>Ports to share state</h2>
-      <ElmComponent src={Elm.PortsApp} flags={null} ports={setupPingPongPort} />
+      <ElmComponent src={Elm.PortsApp} ports={setupPingPongPort} flags={null} />
       <div>
         {"js: "}
         <button disabled={!canPong} onClick={pong}>

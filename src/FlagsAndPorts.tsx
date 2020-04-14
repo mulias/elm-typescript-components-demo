@@ -1,7 +1,7 @@
 import React from "react";
 import ElmComponent from "react-elm-components";
 import usePorts from "./usePorts";
-import { Elm } from "./elm/ElmApps";
+import { Elm } from "./elm/FlagsAndPortsApp.elm";
 
 const FlagsAndPorts: React.FC = () => {
   const [_alertPort, setupAlertPort] = usePorts<typeof Elm.FlagsAndPortsApp>(

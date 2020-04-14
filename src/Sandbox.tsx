@@ -1,6 +1,6 @@
 import React from "react";
 import ElmComponent from "react-elm-components";
-import { Elm } from "./elm/ElmApps";
+import { Elm } from "./elm/SandboxApp.elm";
 
 const Sandbox: React.FC = () => (
   <div>

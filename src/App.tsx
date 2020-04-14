@@ -1,7 +1,6 @@
 import React from "react";
 import ElmComponent from "react-elm-components";
 import usePorts from "./usePorts";
-import { Elm } from "./elm/ElmApps";
 import Sandbox from "./Sandbox";
 import Flags from "./Flags";
 import Ports from "./Ports";
