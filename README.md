@@ -1,7 +1,8 @@
 # Elm, React, and TypeScript Interop Demo
 
 This repo demonstrates the current state of integrating Elm applications into a
-React project that uses typescript.
+React project that uses typescript. On this branch I'm using `elm-tigershark`,
+my WIP replacement for `elm-typescript-interop`.
 
 ### Setup
 
@@ -22,43 +23,11 @@ applications:
 - And finally a `FlagsAndPortsApp` where React both passes an initial flag and
   subscribes to outgoing Elm messages through a port.
 
-Running `yarn elm-typescript-interop` generates TypeScript declaration files for
-each Elm module. Unfortunatly the structure of these declarations assumes that
-the elm modules are compiled seperatly, which is not the case here. As a result
-we need to both re-generate the declarations when our Elm code changes, and then
-copy those changes into the main `src/elm/ElmApps/index.d.ts` file.
+The type declarations used for these Elm programs are located in `src/elm.d.ts`
+and are re-generated when Elm files are changed, via the `elm-tigershark`
+webpack plugin. The type declarations can be generated from the command line by
+running `yarn tigershark src/elm/*.elm --output=src/elm.d.ts --tsModule='*.elm'`.
 
-### Goals
-
-The ultimate goal is to improve the tooling around Elm, React, and Typescript so
-that the three tools interop seamlessly. That means eliminating these tasks,
-which are currently done by hand:
-
-- Write the `rect-elm-components.d.ts` type declarations.
-- Create a `usePorts` hook for easy port setup.
-- Compile the elm code before the typescript code.
-- Collect the output of `elm-typescript-interop` and create a declaration file
-  for the compiled multi-module elm code.
-- Fix inconsistencies in how `elm-typescript-interop` generates types for ports.
-
-### Todo
-
-- [ ] Contact the `react-elm-components` maintainers about adding `rect-elm-components.d.ts`
-  to the repo, or instead adding it to `DefinitelyTyped`. Status: [PR open](https://github.com/cultureamp/react-elm-components/pull/30),
-  review pending.
-- [ ] Publish `usePorts` as an npm package.
-- [ ] Contact the `elm-typescript-interop` maintainers about issues generating types
-  for multiple elm applications. Status: [Issue open](https://github.com/dillonkearns/elm-typescript-interop/issues/28),
-  response pending. This may be a dead project, so I've [started work on an alternative](https://github.com/mulias/elm-tigershark).
-- [x] Figure out how to integrate the elm compiler as a webpack loader. I seem to
-  remember trying this with `elm-webpack-loader`, but the way `*.elm` files were
-  imported didn't work with `react-elm-components`, or something. This may be
-  fixed, or may be fixable through configuration. Short of that, determine what
-  needs to change to make these two libraries compatable. Update:
-  `elm-webpack-loader` is currently working with the exploratory ts-interop
-  library, so that seems like the path forward.
-- [ ] After the webpack loader is set up, make `elm-typescript-interop` also run
-  when watched elm files change. Update: I don't think webpack is the right
-  place for this, since the declaration file is not an emitted asset. It seems
-  more appropriate to have a `--watch` flag on the declaration file generating
-  tool.
+As noted in the `master` branch, to use these Elm programs in a react context
+we're using the `react-elm-components`, the locally defined
+`react-elm-components.d.ts`, and a custom `usePorts` hook.
